@@ -49,9 +49,7 @@ class _MyAppState extends State<MyApp> {
     Set<String> currentprev = {};
     result!.listen((event) {
       setState(() {
-        _mainNote = fpad.getMainNote(event);
-        _effectiveNotes = fpad.getEffectiveNotes(event);
-        _allNotes = fpad.getAllNotes(event);
+        _allNotes = fpad.getNotes(event);
         twoprev = oneprev;
         oneprev = currentprev;
         currentprev = _allNotes!.toSet();
