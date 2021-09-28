@@ -18,10 +18,9 @@ class _MyAppState extends State<MyApp> {
   FlutterPianoAudioDetection fpad = new FlutterPianoAudioDetection();
 
   Stream<List<dynamic>>? result;
-  String? _mainNote;
-  List<String>? _effectiveNotes;
   List<String>? _allNotes;
   List<String>? _continuousNotes;
+
   bool? isC = true;
 
   List<String> answer = ['C4', 'E4', 'G4'];
@@ -42,23 +41,30 @@ class _MyAppState extends State<MyApp> {
   }
 
   void getResult() {
-    result = fpad.startAudioRecognition();
-    sleep(Duration(seconds: 1));
     Set<String> twoprev = {};
     Set<String> oneprev = {};
     Set<String> currentprev = {};
+    
+    result = fpad.startAudioRecognition();
     result!.listen((event) {
       setState(() {
+        // get current notes
         _allNotes = fpad.getNotes(event);
+
+        // pass notes to one previous set
         twoprev = oneprev;
         oneprev = currentprev;
         currentprev = _allNotes!.toSet();
+
+        // continuousNotes are intersection of the three sets currentprev, oneprev and twoprev
         _continuousNotes =
             currentprev.intersection(oneprev.intersection(twoprev)).toList();
-        isC = _continuousNotes == answer;
-        print(isC);
+
+        // judge whether _continuousNotes is equal to the correct answer
         isC = answer.toSet().difference(_continuousNotes!.toSet()).isEmpty &&
             _continuousNotes!.toSet().difference(answer.toSet()).isEmpty;
+
+        // print in console
         print(answer);
         print(_continuousNotes);
         print(isC);
@@ -77,27 +83,6 @@ class _MyAppState extends State<MyApp> {
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            // Text(
-            //   'Main note:',
-            // ),
-            // Text(
-            //   '$_mainNote',
-            //   style: Theme.of(context).textTheme.headline4,
-            // ),
-            // Text(
-            //   'Effective notes:',
-            // ),
-            // Text(
-            //   '$_effectiveNotes',
-            //   style: Theme.of(context).textTheme.headline4,
-            // ),
-            // Text(
-            //   'All notes:',
-            // ),
-            // Text(
-            //   '$_allNotes',
-            //   style: Theme.of(context).textTheme.headline4,
-            // ),
             Text(
               'Continuous notes:',
             ),
