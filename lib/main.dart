@@ -74,6 +74,9 @@ class _MyAppState extends State<MyApp> {
             _qNumber = 0;
           }
           _answer = answerList[_qNumber];
+          twoprev = {};
+          oneprev = {};
+          currentprev = {};
           _continuousNotes = [];
         }
       });
@@ -104,8 +107,8 @@ class _MyAppState extends State<MyApp> {
               style: kTempTextStyle,
             ),
             Text(
-              '$_answer',
-              style: Theme.of(context).textTheme.headline4,
+                '$_answer',
+                style: Theme.of(context).textTheme.headline4,
             ),
             Text(
               'Playing notes:',
@@ -155,4 +158,3 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
