@@ -2,8 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_piano_audio_detection/flutter_piano_audio_detection.dart';
 import 'dart:async';
-import 'dart:io';
 import 'answerList.dart';
+import 'constants.dart';
 
 void main() {
   runApp(MyApp());
@@ -97,19 +97,11 @@ class _MyAppState extends State<MyApp> {
             ),
             Text(
               'Question Number: ${_qNumber + 1} / $_totalQuestoins',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 30,
-                color: Theme.of(context).primaryColor,
-              ),
+              style: kTitleTextStyle,
             ),
             Text(
               'Next chord:',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 30,
-                color: Colors.black,
-              ),
+              style: kTempTextStyle,
             ),
             Text(
               '$_answer',
@@ -117,11 +109,7 @@ class _MyAppState extends State<MyApp> {
             ),
             Text(
               'Playing notes:',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 30,
-                color: Colors.black,
-              ),
+              style: kTempTextStyle,
             ),
             Text(
               '$_continuousNotes',
@@ -129,11 +117,7 @@ class _MyAppState extends State<MyApp> {
             ),
             Text(
               'Is Correct?:',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 30,
-                color: Colors.black,
-              ),
+              style: kTempTextStyle,
             ),
             if (isCorrect == true)
               Icon(Icons.mood, size: 50)
