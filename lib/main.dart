@@ -106,9 +106,16 @@ class _MyAppState extends State<MyApp> {
               'Next chord:',
               style: kTempTextStyle,
             ),
-            Text(
-                '$_answer',
-                style: Theme.of(context).textTheme.headline4,
+            AnimatedSwitcher(
+              duration: Duration(milliseconds: 500),
+              transitionBuilder: (child, animation) {
+                return ScaleTransition(child: child, scale: animation);
+              },
+              child: Text(
+                  '$_answer',
+                  key: ValueKey<int>(_qNumber),
+                  style: Theme.of(context).textTheme.headline4,
+              ),
             ),
             Text(
               'Playing notes:',

@@ -21,3 +21,4 @@ doc/api/
 *.js.map
 .DS_Store
 ios/onsets_frames_wavinput.tflite
+.flutter-plugins-dependencies
