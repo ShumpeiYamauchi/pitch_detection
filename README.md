@@ -1,16 +1,33 @@
-# piano_pitch_detection
+"pitch_detection" is an app judging the pitch in flutter.
+ 
+# DEMOGR
 
-A new Flutter project.
+In preparation ... 
 
-## Getting Started
+# Features
 
-This project is a starting point for a Flutter application.
+You can judge the correctness of given chords on your android/ios device.
 
-A few resources to get you started if this is your first Flutter project:
+# Requirement
+ 
+* Flutter 2.2.4
+* Dart 2.13.4
+* [flutter_piano_audio_detection 1.0.3](https://pub.dev/packages/flutter_piano_audio_detection)
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Usage
+
+Run main.dart in your flutter environment.
+
+# Note
+ 
+I don't test environments under Windows.
+ 
+# Author
+ 
+* Shumpei Yamauchi
+* The Piano Teachers' National Association of Japan / To-on Kikaku Co., Ltd.
+ 
+# License
+ 
+"pitch_detection" is under [MIT license](https://en.wikipedia.org/wiki/MIT_License).
