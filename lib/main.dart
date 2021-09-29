@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_piano_audio_detection/flutter_piano_audio_detection.dart';
 import 'dart:async';
+import 'dart:io';
 import 'answerList.dart';
 
 void main() {
@@ -18,7 +19,6 @@ class _MyAppState extends State<MyApp> {
   FlutterPianoAudioDetection fpad = new FlutterPianoAudioDetection();
 
   Stream<List<dynamic>>? result;
-  List<String>? _allNotes;
   List<String>? _continuousNotes;
 
   static int _qNumber = 0;
@@ -42,21 +42,21 @@ class _MyAppState extends State<MyApp> {
   }
 
   void getResult() {
+    List<String>? _allNotes;
     Set<String> twoprev = {};
     Set<String> oneprev = {};
     Set<String> currentprev = {};
 
     result = fpad.startAudioRecognition();
     result!.listen((event) {
+      // get current notes
+      _allNotes = fpad.getNotes(event);
+      // pass notes to one previous set
+      twoprev = oneprev;
+      oneprev = currentprev;
+      currentprev = _allNotes!.toSet();
+
       setState(() {
-        // get current notes
-        _allNotes = fpad.getNotes(event);
-
-        // pass notes to one previous set
-        twoprev = oneprev;
-        oneprev = currentprev;
-        currentprev = _allNotes!.toSet();
-
         // continuousNotes are intersection of the three sets currentprev, oneprev and twoprev
         _continuousNotes =
             currentprev.intersection(oneprev.intersection(twoprev)).toList();
@@ -68,12 +68,13 @@ class _MyAppState extends State<MyApp> {
 
         // check playing correct notes
         if (isCorrect!) {
-          if (_qNumber != _totalQuestoins - 1) {
+          if (_qNumber < _totalQuestoins - 1) {
             _qNumber++;
           } else {
             _qNumber = 0;
           }
           _answer = answerList[_qNumber];
+          _continuousNotes = [];
         }
       });
     });
@@ -92,10 +93,23 @@ class _MyAppState extends State<MyApp> {
           children: <Widget>[
             SizedBox(
               width: 200,
-              height: 300,
+              height: 250,
+            ),
+            Text(
+              'Question Number: ${_qNumber + 1} / $_totalQuestoins',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 30,
+                color: Theme.of(context).primaryColor,
+              ),
             ),
             Text(
               'Next chord:',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 30,
+                color: Colors.black,
+              ),
             ),
             Text(
               '$_answer',
@@ -103,6 +117,11 @@ class _MyAppState extends State<MyApp> {
             ),
             Text(
               'Playing notes:',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 30,
+                color: Colors.black,
+              ),
             ),
             Text(
               '$_continuousNotes',
@@ -110,10 +129,16 @@ class _MyAppState extends State<MyApp> {
             ),
             Text(
               'Is Correct?:',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 30,
+                color: Colors.black,
+              ),
             ),
-            if (isCorrect == true) Icon(Icons.mood, size: 50)
-            // else
-            //  Icon(Icons.mood_bad)
+            if (isCorrect == true)
+              Icon(Icons.mood, size: 50)
+            else
+              Icon(Icons.mood_bad)
           ],
         )),
         floatingActionButton: Container(
@@ -146,3 +171,4 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+
